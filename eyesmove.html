@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Face</title>
+    <link rel="stylesheet" href="eyesmove.css">
+</head>
+<body>
+    <div class="face">
+        <div class="eyes">
+            <div class="eye"></div>
+            <div class="eye"></div>
+        </div>
+    </div>
+    <script>
+        document.querySelector('body').addEventListener('mousemove', eyeball);
+
+        function eyeball(event) {
+            const eyes = document.querySelectorAll('.eye');
+            eyes.forEach((eye) => {
+                const rect = eye.getBoundingClientRect();
+                const x = rect.left + eye.clientWidth / 2;
+                const y = rect.top + eye.clientHeight / 2;
+
+                // Calculate the angle using the correct order for atan2
+                const radian = Math.atan2(event.pageY - y, event.pageX - x);
+
+                // Convert radian to degrees and rotate the eye
+                const rot = radian * (180 / Math.PI);
+                eye.style.transform = `rotate(${rot + 90}deg)`; // Added 90 degrees for proper orientation
+            });
+        }
+    </script>
+</body>
+</html>
